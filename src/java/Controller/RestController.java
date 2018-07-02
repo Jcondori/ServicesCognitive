@@ -13,15 +13,19 @@ import lombok.Data;
 public class RestController implements Serializable {
 
     private String UrlImagen;
+    private String UrlImagenAnalisado;
     private String Resultado;
-    private RestDao dao = new RestDao();
 
-    public void consultar() throws Exception{
+    public void consultar() throws Exception {
+        RestDao dao;
         try {
-            Resultado = dao.consultar(UrlImagen);
+            dao = new RestDao();
+            setUrlImagenAnalisado(getUrlImagen());
+            Resultado = dao.consultar(getUrlImagen());
+            setUrlImagen(null);
         } catch (IOException e) {
             throw e;
         }
     }
-    
+
 }
